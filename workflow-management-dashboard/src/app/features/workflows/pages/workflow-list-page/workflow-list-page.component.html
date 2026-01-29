@@ -1,4 +1,4 @@
-<mat-card>
+<mat-card class="cards">
   <div class="header">
     <div>
       <mat-card-title>Workflows</mat-card-title>
@@ -67,7 +67,8 @@
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="columns"></tr>
-      <tr mat-row *matRowDef="let row; columns: columns; trackBy: trackById"></tr>
+      <tr mat-row *matRowDef="let row; columns: columns"></tr>
+      
     </table>
   </div>
 

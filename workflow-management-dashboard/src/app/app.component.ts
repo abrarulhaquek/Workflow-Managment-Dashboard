@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { Store } from '@ngrx/store';
 import { ThemeService } from './core/theme/theme.service';
 
 @Component({
@@ -11,10 +10,7 @@ import { ThemeService } from './core/theme/theme.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'workflow-management-dashboard';
-
-  constructor(store: Store, theme: ThemeService) {
+  constructor(theme: ThemeService) {
     theme.init();
-    store.dispatch({ type: '[Auth] Init From Storage' });
   }
 }

@@ -1,5 +1,5 @@
 <div class="grid">
-  <mat-card>
+  <mat-card class="cards">
     <mat-card-title>By Status</mat-card-title>
     <div class="metric" *ngFor="let item of (byStatusList$ | async)">
       <span>{{ item.label }}</span>
@@ -7,12 +7,12 @@
     </div>
   </mat-card>
 
-  <mat-card>
+  <mat-card class="cards">
     <mat-card-title>Overdue</mat-card-title>
     <div class="big">{{ overdue$ | async }}</div>
   </mat-card>
 
-  <mat-card>
+  <mat-card class="cards">
     <mat-card-title>Avg completion time</mat-card-title>
     <div class="big">
       <ng-container *ngIf="(avgDays$ | async) as v; else na"> {{ v | number : '1.1-1' }} days </ng-container>
@@ -20,15 +20,19 @@
     </div>
   </mat-card>
 
-  <mat-card class="span2">
+  <mat-card class="span2 cards">
     <mat-card-title>Status Distribution</mat-card-title>
-    <canvas
-      baseChart
-      [type]="'doughnut'"
-      [data]="(chartData$ | async) ?? emptyChartData"
-      [options]="chartOptions"
-    >
-    </canvas>
+  
+    <div class="chart-container">
+      <canvas
+        baseChart
+        [type]="'doughnut'"
+        [data]="(chartData$ | async) ?? emptyChartData"
+        [options]="chartOptions"
+      >
+      </canvas>
+    </div>
   </mat-card>
+  
 </div>
 

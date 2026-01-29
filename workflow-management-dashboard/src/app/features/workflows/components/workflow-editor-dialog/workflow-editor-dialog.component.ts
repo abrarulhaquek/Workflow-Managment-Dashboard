@@ -112,6 +112,7 @@ export class WorkflowEditorDialogComponent {
   save(): void {
     if (this.form.invalid) return;
     const v = this.form.getRawValue();
+    console.log(v);
     this.ref.close({
       name: v.name,
       priority: v.priority,
