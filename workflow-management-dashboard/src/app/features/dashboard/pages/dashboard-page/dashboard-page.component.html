@@ -1,0 +1,34 @@
+<div class="grid">
+  <mat-card>
+    <mat-card-title>By Status</mat-card-title>
+    <div class="metric" *ngFor="let item of (byStatusList$ | async)">
+      <span>{{ item.label }}</span>
+      <strong>{{ item.value }}</strong>
+    </div>
+  </mat-card>
+
+  <mat-card>
+    <mat-card-title>Overdue</mat-card-title>
+    <div class="big">{{ overdue$ | async }}</div>
+  </mat-card>
+
+  <mat-card>
+    <mat-card-title>Avg completion time</mat-card-title>
+    <div class="big">
+      <ng-container *ngIf="(avgDays$ | async) as v; else na"> {{ v | number : '1.1-1' }} days </ng-container>
+      <ng-template #na>—</ng-template>
+    </div>
+  </mat-card>
+
+  <mat-card class="span2">
+    <mat-card-title>Status Distribution</mat-card-title>
+    <canvas
+      baseChart
+      [type]="'doughnut'"
+      [data]="(chartData$ | async) ?? emptyChartData"
+      [options]="chartOptions"
+    >
+    </canvas>
+  </mat-card>
+</div>
+

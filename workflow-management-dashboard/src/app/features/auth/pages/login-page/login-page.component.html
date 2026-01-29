@@ -1,0 +1,27 @@
+<div class="login-shell">
+  <mat-card class="login-card">
+    <mat-card-title>Workflow Dashboard</mat-card-title>
+    <mat-card-subtitle>Mock login for internal teams</mat-card-subtitle>
+
+    <form class="login-form" [formGroup]="form" (ngSubmit)="onSubmit()">
+      <mat-form-field appearance="outline">
+        <mat-label>Username</mat-label>
+        <input matInput formControlName="username" autocomplete="username" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Role</mat-label>
+        <mat-select formControlName="role">
+          <mat-option value="admin">Admin</mat-option>
+          <mat-option value="manager">Manager</mat-option>
+          <mat-option value="user">User</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <button mat-flat-button color="primary" type="submit" [disabled]="form.invalid">
+        Sign in
+      </button>
+    </form>
+  </mat-card>
+</div>
+

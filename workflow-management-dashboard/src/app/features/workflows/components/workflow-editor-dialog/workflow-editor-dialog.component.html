@@ -1,0 +1,50 @@
+<h2 mat-dialog-title>{{ data.mode === 'create' ? 'Create workflow' : 'Edit workflow' }}</h2>
+
+<form mat-dialog-content [formGroup]="form" class="grid">
+  <mat-form-field appearance="outline">
+    <mat-label>Name</mat-label>
+    <input matInput formControlName="name" />
+    <mat-error *ngIf="form.controls.name.hasError('required')">Name is required</mat-error>
+    <mat-error *ngIf="form.controls.name.hasError('nameNotUnique')">Name must be unique</mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Priority</mat-label>
+    <mat-select formControlName="priority">
+      <mat-option value="Low">Low</mat-option>
+      <mat-option value="Medium">Medium</mat-option>
+      <mat-option value="High">High</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Status</mat-label>
+    <mat-select formControlName="status">
+      <mat-option value="Draft">Draft</mat-option>
+      <mat-option value="In Review">In Review</mat-option>
+      <mat-option value="Approved">Approved</mat-option>
+      <mat-option value="Rejected">Rejected</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Assigned users (comma separated ids)</mat-label>
+    <input matInput formControlName="assignedUserIds" placeholder="u_user,u_manager" />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Due date</mat-label>
+    <input matInput formControlName="dueDate" placeholder="YYYY-MM-DD" />
+    <mat-error *ngIf="form.controls.dueDate.hasError('dueDatePast')">
+      Due date cannot be in the past
+    </mat-error>
+  </mat-form-field>
+</form>
+
+<div mat-dialog-actions align="end">
+  <button mat-button type="button" (click)="close()">Cancel</button>
+  <button mat-flat-button color="primary" type="button" (click)="save()" [disabled]="form.invalid">
+    Save
+  </button>
+</div>
+

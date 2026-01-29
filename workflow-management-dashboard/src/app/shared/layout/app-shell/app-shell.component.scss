@@ -1,0 +1,30 @@
+.shell {
+  height: 100vh;
+}
+
+.sidenav {
+  width: 260px;
+}
+
+.brand {
+  font-weight: 600;
+  padding: 16px;
+}
+
+.content {
+  padding: 16px;
+}
+
+.spacer {
+  flex: 1;
+}
+
+.user {
+  margin-right: 12px;
+  opacity: 0.9;
+}
+
+a.active {
+  font-weight: 600;
+}
+

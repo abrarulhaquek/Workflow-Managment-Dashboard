@@ -1,0 +1,23 @@
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.span2 {
+  grid-column: span 3;
+  min-height: 340px;
+}
+
+.metric {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 0;
+}
+
+.big {
+  font-size: 32px;
+  font-weight: 700;
+  padding-top: 12px;
+}
+
