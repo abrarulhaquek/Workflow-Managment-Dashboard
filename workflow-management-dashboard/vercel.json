@@ -3,6 +3,10 @@
   "outputDirectory": "dist/workflow-management-dashboard/browser",
   "routes": [
     {
+      "src": "/(.*)\\.(js|css|png|jpg|jpeg|svg|ico|woff2?)",
+      "dest": "/$1"
+    },
+    {
       "src": "/(.*)",
       "dest": "/index.html"
     }
