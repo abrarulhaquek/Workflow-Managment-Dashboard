@@ -15,6 +15,10 @@ body {
       background-color: rgba(0, 0, 0, 0.6);
     }
 
+    a.mdc-list-item span {
+      color: #e6e6e6 !important;
+    }
+
     .mat-sidenav {
       background-color: #1e1e1e;
       color: #e6e6e6;
@@ -54,6 +58,14 @@ body {
     .mat-mdc-table {
       background: transparent;
       color: #e6e6e6;
+
+      button {
+        color: #e6e6e6;
+
+        &:disabled {
+          color: #555;
+        }
+      }
     }
 
     .mat-mdc-header-cell {

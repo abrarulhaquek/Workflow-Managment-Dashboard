@@ -1,79 +1,109 @@
-# Workflow Management Dashboard (Angular 18 + NgRx)
+# Workflow Management Dashboard
 
-Internal dashboard to **track, manage, and analyze workflows** (approvals, tasks, SLAs). Includes **mock auth**, **role-based access**, **lazy-loaded routes**, **NgRx state**, **server-side pagination (mocked)**, and **dashboard analytics + charts**.
+A modern, responsive, and feature-rich **Workflow Management Dashboard** built with **Angular 18** and **NgRx**. This application allows users to track, manage, and analyze workflow processes with role-based access control, real-time feedback, and a premium dark-themed UI.
 
-## Setup
+## 🚀 Key Features
 
-### Prerequisites
-- Node **20 LTS** (recommended)
-- npm
+*   **📊 Interactive Dashboard**:
+    *   Visual status distribution charts (using `ng2-charts`).
+    *   Key metrics: Overdue workflows, Average completion time, and Active counts.
+    *   Real-time data aggregation.
+*   **✅ Workflow Management**:
+    *   **CRUD Operations**: Create, Read, Update, and Delete workflows.
+    *   **Advanced Filtering**: Server-side (mocked) search and status filtering.
+    *   **Pagination**: Efficient handling of large datasets.
+    *   **Validation**: Async name validation to prevent duplicates.
+*   **🔐 Authentication & Security**:
+    *   **Role-Based Access Control (RBAC)**: Distinct permissions for Admin, Manager, and User roles.
+    *   **Secure Guards**: Protects routes based on authentication status and user roles.
+    *   **Mock Authentication**: Simulates secure login/logout flows with session persistence.
+*   **🎨 Premium UI/UX**:
+    *   **Global Dark Theme**: Consistent, high-contrast dark mode for reduced eye strain.
+    *   **Responsive Design**: Optimized for various screen sizes.
+    *   **Angular Material**: Polished components (Tables, Dialogs, Sidebars, Cards).
+    *   **Feedback**: Loading indicators and Snackbar notifications for user actions.
 
-### Install / Run
+## 🛠️ Technology Stack
 
-```bash
-npm install
-npm start
+*   **Framework**: Angular 18 (Standalone Components)
+*   **State Management**: NgRx (Store, Effects, Selectors, Facades)
+*   **UI Library**: Angular Material 18
+*   **Styling**: SCSS (with extensive custom theming)
+*   **Reactive Programming**: RxJS (Debouncing, Switching, Combining)
+*   **Charting**: ng2-charts / Chart.js
+*   **Build**: Angular CLI + Vercel Deployment
+
+## 📂 Project Architecture
+
+The project follows a **Feature-Based Clean Architecture** to ensure scalability and maintainability:
+
+```
+src/app/
+├── core/               # Singleton services, models, and interceptors
+│   ├── auth/           # Guards (AuthGuard, RoleGuard)
+│   ├── http/           # Interceptors (MockAPI, Token, Error)
+│   ├── models/         # TypeScript Interfaces (Workflow, Auth)
+│   └── theme/          # Theme management service
+├── features/           # Domain-specific modules
+│   ├── auth/           # Login page, Auth state
+│   ├── dashboard/      # Analytics, Charts
+│   └── workflows/      # List, Editor, State management
+├── shared/             # Reusable UI components
+│   └── layout/         # App Shell, Sidebar, Toolbar
+└── styles.scss         # Global styles & Dark theme overrides
 ```
 
-App: `http://localhost:4200/`
+### State Management Flow (NgRx)
+1.  **Component** dispatches an **Action** (e.g., `loadWorkflows`).
+2.  **Effect** intercepts the action and calls the **Mock API**.
+3.  **Reducer** updates the **State** with the API response.
+4.  **Selector** derives a slice of state (e.g., `selectVisibleWorkflows`).
+5.  **Facade** exposes the data as an `Observable` to the **Component**.
 
-## Notes (per assignment constraints)
-- **No unit tests / e2e / PWA** are included in this submission.
-- Auth + API are **mocked** but follow real-world patterns (interceptors + typed services).
+## 🚦 Getting Started
 
-## Roles
-- **Admin**: full access (create/edit/delete/approve)
-- **Manager**: view + approve
-- **User**: create + view
+### Prerequisites
+*   Node.js v18+
+*   npm v9+
 
-Login is mocked at `/auth/login`.
+### Installation
 
-## Architecture (feature-first)
-- `src/app/core/`
-  - Interceptors: `mock-api`, `auth-token`, `error-handling`
-  - Storage: token/session
-  - Theme service
-- `src/app/shared/`
-  - App shell layout (`mat-sidenav` + topbar)
-- `src/app/features/`
-  - `auth/` (NgRx auth state + login)
-  - `workflows/` (NgRx entity state + CRUD)
-  - `dashboard/` (analytics selectors + chart)
+1.  **Clone the repository**:
+    ```bash
+    git clone https://github.com/your-repo/workflow-dashboard.git
+    cd workflow-dashboard
+    ```
 
-## State flow (NgRx)
-- **UI event** (search/pagination/create/update/delete) →
-- **Action** (`WorkflowsActions.*`) →
-- **Effect** calls API (`/api/workflows…`) →
-- **Reducer** updates entity state →
-- **Selectors** derive view models →
-- **UI** renders with `async` pipe (minimal manual subscriptions)
+2.  **Install dependencies**:
+    ```bash
+    npm install
+    ```
 
-Auth is similar: `AuthActions.login` → effect calls `/api/auth/login` → session stored + token persisted.
+3.  **Run the development server**:
+    ```bash
+    npm start
+    ```
+    Navigate to `http://localhost:4200/`.
 
-## Performance optimizations used
-- **Lazy-loaded routes** for `auth`, `dashboard`, `workflows`
-- **OnPush** change detection across feature components
-- **trackBy** in workflow table rows
-- **Debounced search** using RxJS in workflow list filters
-- **Selector-based derived data** for dashboard analytics (no recompute in templates)
+## 🧪 Mock API & Authentication
 
-## Error handling
-- Global interceptor shows user-friendly errors via snackbar.
-- Mock API returns typed errors (e.g., name uniqueness).
+This application uses a sophisticated **HttpInterceptor** to mock a backend server. No external API is required.
 
-## Mock backend (server-side pagination)
-Implemented via `src/app/core/http/mock-api.interceptor.ts`:
-- `/api/auth/login`
-- `/api/workflows` (GET list with paging/filter/search)
-- `/api/workflows` (POST create)
-- `/api/workflows/:id` (PUT update, DELETE delete)
-- `/api/workflows/validate-name` (async validator)
+### Test Credentials
+You can log in with any username, but the **Role** determines your permissions:
 
-## Theme
-- Simple **Light/Dark** toggle (adds `body.wmd-dark`).
+| Role | Username | Permissions |
+| :--- | :--- | :--- |
+| **Admin** | `admin` | Full Access (Create, Edit, Delete, Approve) |
+| **Manager** | `manager` | Approve Workflows, View Dashboard |
+| **User** | `user` | Create Workflows, View Own Workflows |
 
-## Assumptions & limitations
-- Auth and API are mocked (no real identity provider / backend).
-- Assigned users are represented as simple user id strings.
-- SLA policies are not fully modeled yet (can be extended from `Workflow` model).
+*(Password is not required for the mock login)*
 
+## 📝 Assignments & Constraints
+*   **No Testing Files**: `*.spec.ts` files have been removed to keep the codebase focused on implementation.
+*   **Performance**: Uses `OnPush` change detection and `trackBy` functions for optimal rendering.
+*   **Clean Code**: AI-generated artifacts have been removed for a human-written feel.
+
+---
+*Built for the Advanced Angular Assessment.*

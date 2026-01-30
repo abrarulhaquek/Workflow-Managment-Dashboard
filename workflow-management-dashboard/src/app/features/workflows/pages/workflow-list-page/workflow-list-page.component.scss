@@ -10,6 +10,17 @@
   grid-template-columns: 1fr 220px;
   gap: 12px;
   margin-top: 12px;
+
+  @media (max-width: 600px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.no-records {
+  padding: 32px;
+  text-align: center;
+  color: #888;
+  font-style: italic;
 }
 
 .table-wrap {
