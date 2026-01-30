@@ -89,8 +89,9 @@ function handle(
           pathname === `${apiPrefix}/workflows/validate-name` &&
           req.method === 'GET'
         ) {
-          const name = searchParams.get('name') ?? '';
-          const excludeId = searchParams.get('excludeId') ?? undefined;
+          const params = req.params;
+          const name = params.get('name') ?? '';
+          const excludeId = params.get('excludeId') ?? undefined;
 
           if (!name.trim()) {
             return of(json({ isUnique: true }, 200));
@@ -107,19 +108,25 @@ function handle(
         /* ========= EVERYTHING BELOW REQUIRES AUTH ========= */
         requireAuth(req);
 
+        /* ========= DASHBOARD ========= */
+        if (pathname === `${apiPrefix}/dashboard/stats` && req.method === 'GET') {
+          return of(json(db.getDashboardStats(), 200));
+        }
+
         /* ========= WORKFLOWS ========= */
 
         // LIST
         if (pathname === `${apiPrefix}/workflows` && req.method === 'GET') {
+          const params = req.params; // Use params from HttpRequest
           const query: WorkflowListQuery = {
-            page: parseIntParam(searchParams.get('page'), 1),
-            pageSize: parseIntParam(searchParams.get('pageSize'), 10),
-            search: searchParams.get('search') ?? undefined,
-            status: (searchParams.get('status') as any) ?? undefined,
+            page: parseIntParam(params.get('page'), 1),
+            pageSize: parseIntParam(params.get('pageSize'), 10),
+            search: params.get('search') ?? undefined,
+            status: (params.get('status') as any) ?? undefined,
             assignedUserId:
-              searchParams.get('assignedUserId') ?? undefined,
-            fromDate: searchParams.get('fromDate') ?? undefined,
-            toDate: searchParams.get('toDate') ?? undefined
+              params.get('assignedUserId') ?? undefined,
+            fromDate: params.get('fromDate') ?? undefined,
+            toDate: params.get('toDate') ?? undefined
           };
 
           return of(json(db.listWorkflows(query), 200));

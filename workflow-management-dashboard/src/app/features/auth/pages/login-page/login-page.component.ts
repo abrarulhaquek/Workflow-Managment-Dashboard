@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { AsyncPipe, NgIf } from '@angular/common';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
@@ -6,6 +7,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatSelectModule } from '@angular/material/select';
 
 import { Role } from '../../../../core/models/auth.models';
@@ -15,10 +17,13 @@ import { AuthFacade } from '../../auth.facade';
   selector: 'app-login-page',
   standalone: true,
   imports: [
+    AsyncPipe,
+    NgIf,
     ReactiveFormsModule,
     MatCardModule,
     MatFormFieldModule,
     MatInputModule,
+    MatProgressBarModule,
     MatSelectModule,
     MatButtonModule
   ],
@@ -27,15 +32,15 @@ import { AuthFacade } from '../../auth.facade';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoginPageComponent {
+  private readonly router = inject(Router);
+  private readonly auth = inject(AuthFacade);
+
   readonly form = new FormGroup({
     username: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
     role: new FormControl<Role>('user', { nonNullable: true, validators: [Validators.required] })
   });
 
-  constructor(
-    private readonly router: Router,
-    private readonly auth: AuthFacade
-  ) {}
+  readonly loading$ = this.auth.loading$;
 
   onSubmit(): void {
     if (this.form.invalid) return;

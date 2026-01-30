@@ -1,17 +1,49 @@
-/* You can add global styles to this file, and also import other style files */
-
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
-
-body.wmd-dark {
-  background: #121212;
-  color: #e6e6e6;
+html,
+body {
+  height: 100%;
 }
 
-body.wmd-dark .mat-mdc-card {
-  background: #1e1e1e;
-}
-.cards {
-  padding: 16px;
-  border-radius: 10px;
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+
+  .wmd-dark {
+    background: #121212;
+    color: #e6e6e6;
+
+    .mat-drawer-container {
+      background-color: #121212;
+      color: #e6e6e6;
+
+      button,
+      input {
+        color: #e6e6e6;
+      }
+
+      .mat-mdc-card {
+        background: #1e1e1e;
+        color: #e6e6e6;
+      }
+
+      .mat-mdc-table {
+        background: transparent;
+        color: #e6e6e6;
+      }
+
+      .mat-mdc-header-cell {
+        color: #e6e6e6;
+      }
+
+      .mat-mdc-cell {
+        color: #ccc;
+      }
+    }
+
+  }
+
+  .cards {
+    padding: 16px;
+    border-radius: 10px;
+  }
+
 }

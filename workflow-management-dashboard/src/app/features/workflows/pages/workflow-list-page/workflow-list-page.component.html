@@ -51,16 +51,12 @@
       </ng-container>
 
       <ng-container matColumnDef="actions">
-        <th mat-header-cell *matHeaderCellDef></th>
-        <td mat-cell *matCellDef="let w" class="actions">
+        <th mat-header-cell *matHeaderCellDef>Actions</th>
+        <td mat-cell *matCellDef="let w">
           <button mat-button (click)="openEdit(w)" [disabled]="!(canEdit$ | async)">Edit</button>
           <button mat-button color="warn" (click)="delete(w)" [disabled]="!(canDelete$ | async)">Delete</button>
-          <button
-            mat-button
-            color="primary"
-            (click)="approve(w)"
-            [disabled]="!(canApprove$ | async) || w.status === 'Approved'"
-          >
+          <button mat-button color="primary" (click)="approve(w)"
+            [disabled]="!(canApprove$ | async) || w.status === 'Approved'">
             Approve
           </button>
         </td>
@@ -68,16 +64,10 @@
 
       <tr mat-header-row *matHeaderRowDef="columns"></tr>
       <tr mat-row *matRowDef="let row; columns: columns"></tr>
-      
+
     </table>
   </div>
 
-  <mat-paginator
-    [length]="total$ | async"
-    [pageIndex]="(query$ | async)?.page! - 1"
-    [pageSize]="(query$ | async)?.pageSize!"
-    [pageSizeOptions]="[5, 10, 25, 50]"
-    (page)="pageChanged($event)"
-  />
+  <mat-paginator [length]="total$ | async" [pageIndex]="(query$ | async)?.page! - 1"
+    [pageSize]="(query$ | async)?.pageSize!" [pageSizeOptions]="[5, 10, 25, 50]" (page)="pageChanged($event)" />
 </mat-card>
-

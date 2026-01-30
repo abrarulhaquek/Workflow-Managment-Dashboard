@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -35,13 +35,14 @@ import { ThemeService } from '../../../core/theme/theme.service';
 export class AppShellComponent {
   private readonly auth = inject(AuthFacade);
   private readonly theme = inject(ThemeService);
-
+  private readonly router = inject(Router);
   readonly userLabel$ = this.auth.user$.pipe(
     map((u) => (u ? `${u.username} (${u.role})` : null))
   );
 
   logout(): void {
     this.auth.logout();
+    this.router.navigate(['/auth/login']);
   }
 
   toggleTheme(): void {

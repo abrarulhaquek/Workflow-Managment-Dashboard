@@ -116,6 +116,38 @@ export class MockDbService {
     if (this.workflows.length === before) throw new Error('Workflow not found.');
   }
 
+  getDashboardStats(): any {
+    const counts: any = { Draft: 0, 'In Review': 0, Approved: 0, Rejected: 0 };
+    let overdue = 0;
+    let completedCount = 0;
+    let totalDays = 0;
+    const today = new Date().toISOString().slice(0, 10);
+
+    for (const w of this.workflows) {
+      // By Status
+      counts[w.status] = (counts[w.status] || 0) + 1;
+
+      // Overdue
+      if (w.dueDate < today && w.status !== 'Approved') {
+        overdue++;
+      }
+
+      // Avg Completion
+      if (w.completedAt && w.status === 'Approved') {
+        const start = new Date(w.createdAt).getTime();
+        const end = new Date(w.completedAt).getTime();
+        totalDays += (end - start) / 86400000;
+        completedCount++;
+      }
+    }
+
+    return {
+      byStatus: counts,
+      overdue,
+      averageCompletionDays: completedCount > 0 ? totalDays / completedCount : null
+    };
+  }
+
   private seedWorkflows(): Workflow[] {
     const today = new Date();
     const mk = (name: string, status: WorkflowStatus, dueInDays: number): Workflow => ({

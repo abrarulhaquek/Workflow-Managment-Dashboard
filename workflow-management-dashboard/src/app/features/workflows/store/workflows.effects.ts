@@ -42,20 +42,25 @@ export class WorkflowsEffects {
           map((created) =>
             WorkflowsActions.createSuccess({ workflow: created })
           ),
+  
+          // ⬇️ reset to page 1 after create
           withLatestFrom(this.store.select(selectWorkflowsQuery)),
           switchMap(([action, query]) =>
             of(
               action,
               WorkflowsActions.load({
-                query: { ...query, page: 1 }
+                query: {
+                  ...query,
+                  page: 1
+                }
               })
             )
           ),
+  
           catchError((e) =>
             of(
               WorkflowsActions.createFailure({
-                message:
-                  e?.error?.message ?? 'Failed to create workflow.'
+                message: e?.error?.message ?? 'Failed to create workflow.'
               })
             )
           )
@@ -63,6 +68,7 @@ export class WorkflowsEffects {
       )
     )
   );
+  
 
   readonly updateOptimistic$ = createEffect(() =>
     this.actions$.pipe(

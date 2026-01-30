@@ -67,21 +67,23 @@ export class WorkflowListPageComponent {
   constructor() {
     // initial load
     this.workflows.load({ page: 1, pageSize: 10 });
-
     // debounced search/filter -> server-side load
     this.filters.valueChanges
       .pipe(
-        startWith(this.filters.getRawValue()),
         debounceTime(250),
         map((v) => ({
           search: (v.search ?? '').trim(),
-          status: v.status ?? undefined
-        })),
-        distinctUntilChanged((a, b) => a.search === b.search && a.status === b.status)
+          status: v.status || undefined // use || to catch null/undefined/empty
+        }))
       )
       .subscribe((v) => {
-        this.workflows.load({ page: 1, pageSize: 10, ...v });
+        this.workflows.load({
+          page: 1,
+          pageSize: 10,
+          ...v
+        });
       });
+
   }
 
   trackById(_: number, w: Workflow): string {
@@ -131,5 +133,5 @@ export class WorkflowListPageComponent {
       w
     );
   }
- }
+}
 

@@ -1,7 +1,11 @@
+<div class="overlay">
+  <mat-progress-bar mode="indeterminate" *ngIf="loading$ | async"></mat-progress-bar>
+</div>
 <div class="login-shell">
   <mat-card class="login-card">
     <mat-card-title>Workflow Dashboard</mat-card-title>
     <mat-card-subtitle>Mock login for internal teams</mat-card-subtitle>
+
 
     <form class="login-form" [formGroup]="form" (ngSubmit)="onSubmit()">
       <mat-form-field appearance="outline">
@@ -18,10 +22,9 @@
         </mat-select>
       </mat-form-field>
 
-      <button mat-flat-button color="primary" type="submit" [disabled]="form.invalid">
+      <button mat-flat-button color="primary" type="submit">
         Sign in
       </button>
     </form>
   </mat-card>
 </div>
-

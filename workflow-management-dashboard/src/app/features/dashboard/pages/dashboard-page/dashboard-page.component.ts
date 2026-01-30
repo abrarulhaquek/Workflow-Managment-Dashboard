@@ -2,16 +2,10 @@ import { AsyncPipe, DecimalPipe, NgFor, NgIf } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 
 import { MatCardModule } from '@angular/material/card';
-import { Store } from '@ngrx/store';
 import { BaseChartDirective } from 'ng2-charts';
 
-import { map } from 'rxjs';
-
-import {
-  selectAverageCompletionDays,
-  selectOverdueCount,
-  selectWorkflowsByStatus
-} from '../../dashboard.selectors';
+import { map, shareReplay } from 'rxjs';
+import { DashboardService } from '../../services/dashboard.service';
 
 @Component({
   selector: 'app-dashboard-page',
@@ -22,27 +16,28 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DashboardPageComponent {
-  private readonly store = inject(Store);
+  private readonly dashboard = inject(DashboardService);
 
-  readonly byStatus$ = this.store.select(selectWorkflowsByStatus);
-  readonly byStatusList$ = this.byStatus$.pipe(
-    map((m) => [
-      { label: 'Draft', value: m.Draft },
-      { label: 'In Review', value: m['In Review'] },
-      { label: 'Approved', value: m.Approved },
-      { label: 'Rejected', value: m.Rejected }
+  readonly stats$ = this.dashboard.getStats().pipe(shareReplay(1));
+
+  readonly byStatusList$ = this.stats$.pipe(
+    map((s) => [
+      { label: 'Draft', value: s.byStatus.Draft },
+      { label: 'In Review', value: s.byStatus['In Review'] },
+      { label: 'Approved', value: s.byStatus.Approved },
+      { label: 'Rejected', value: s.byStatus.Rejected }
     ])
   );
 
-  readonly overdue$ = this.store.select(selectOverdueCount);
-  readonly avgDays$ = this.store.select(selectAverageCompletionDays);
+  readonly overdue$ = this.stats$.pipe(map((s) => s.overdue));
+  readonly avgDays$ = this.stats$.pipe(map((s) => s.averageCompletionDays));
 
-  readonly chartData$ = this.byStatus$.pipe(
-    map((m) => ({
+  readonly chartData$ = this.stats$.pipe(
+    map((s) => ({
       labels: ['Draft', 'In Review', 'Approved', 'Rejected'],
       datasets: [
         {
-          data: [m.Draft, m['In Review'], m.Approved, m.Rejected]
+          data: [s.byStatus.Draft, s.byStatus['In Review'], s.byStatus.Approved, s.byStatus.Rejected]
         }
       ]
     }))
