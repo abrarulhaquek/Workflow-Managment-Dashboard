@@ -1,7 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, map, of, switchMap, tap } from 'rxjs';
-
 import { AuthTokenStorage } from '../../../core/storage/auth-token.storage';
 import { AuthSession } from '../../../core/models/auth.models';
 import { AuthApi } from '../services/auth.api';
@@ -32,7 +31,6 @@ function decodeSessionFromToken(token: string): AuthSession | null {
 
 @Injectable()
 export class AuthEffects {
-  // ✅ FIX: inject dependencies safely
   private readonly actions$ = inject(Actions);
   private readonly api = inject(AuthApi);
   private readonly tokenStorage = inject(AuthTokenStorage);

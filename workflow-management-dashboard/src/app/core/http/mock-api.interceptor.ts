@@ -9,13 +9,10 @@ import {
 import { inject } from '@angular/core';
 import { Observable, of, throwError } from 'rxjs';
 import { delay, mergeMap } from 'rxjs/operators';
-
 import { MockDbService } from '../mock/mock-db.service';
 import { WorkflowListQuery } from '../models/workflow.models';
 
 const apiPrefix = '/api';
-
-/* -------------------- helpers -------------------- */
 
 function json<T>(body: T, status = 200): HttpResponse<T> {
   return new HttpResponse({ status, body });
@@ -50,8 +47,6 @@ function requireAuth(req: HttpRequest<unknown>): void {
   if (!token) throw unauthorized();
 }
 
-/* -------------------- main handler -------------------- */
-
 function handle(
   req: HttpRequest<unknown>,
   next: HttpHandlerFn
@@ -68,7 +63,6 @@ function handle(
     delay(250),
     mergeMap(() => {
       try {
-        /* ========= AUTH ========= */
 
         if (pathname === `${apiPrefix}/auth/login` && req.method === 'POST') {
           const { username, role } = (req.body ?? {}) as {
@@ -83,8 +77,6 @@ function handle(
           return of(json(db.login(username, role as any), 200));
         }
 
-        /* ========= PUBLIC VALIDATION (NO AUTH) ========= */
-        // IMPORTANT: async validator must NOT be blocked by auth
         if (
           pathname === `${apiPrefix}/workflows/validate-name` &&
           req.method === 'GET'
@@ -105,19 +97,14 @@ function handle(
           );
         }
 
-        /* ========= EVERYTHING BELOW REQUIRES AUTH ========= */
         requireAuth(req);
 
-        /* ========= DASHBOARD ========= */
         if (pathname === `${apiPrefix}/dashboard/stats` && req.method === 'GET') {
           return of(json(db.getDashboardStats(), 200));
         }
 
-        /* ========= WORKFLOWS ========= */
-
-        // LIST
         if (pathname === `${apiPrefix}/workflows` && req.method === 'GET') {
-          const params = req.params; // Use params from HttpRequest
+          const params = req.params;
           const query: WorkflowListQuery = {
             page: parseIntParam(params.get('page'), 1),
             pageSize: parseIntParam(params.get('pageSize'), 10),
@@ -132,13 +119,11 @@ function handle(
           return of(json(db.listWorkflows(query), 200));
         }
 
-        // CREATE
         if (pathname === `${apiPrefix}/workflows` && req.method === 'POST') {
           const created = db.createWorkflow(req.body as any);
           return of(json(created, 201));
         }
 
-        // UPDATE / DELETE BY ID
         const wfMatch = pathname.match(
           new RegExp(`^${apiPrefix}/workflows/([^/]+)$`)
         );
@@ -178,8 +163,6 @@ function handle(
     })
   );
 }
-
-/* -------------------- interceptor export -------------------- */
 
 export const mockApiInterceptor: HttpInterceptorFn = (req, next) =>
   handle(req, next);

@@ -1,7 +1,6 @@
 import { AsyncPipe, DatePipe, NgFor, NgIf } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
@@ -10,9 +9,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTableModule } from '@angular/material/table';
-
 import { debounceTime, distinctUntilChanged, map, startWith } from 'rxjs';
-
 import { Workflow, WorkflowListQuery, WorkflowStatus } from '../../../../core/models/workflow.models';
 import { AuthFacade } from '../../../auth/auth.facade';
 import { WorkflowsFacade } from '../../workflows.facade';
@@ -65,15 +62,13 @@ export class WorkflowListPageComponent {
   });
 
   constructor() {
-    // initial load
     this.workflows.load({ page: 1, pageSize: 10 });
-    // debounced search/filter -> server-side load
     this.filters.valueChanges
       .pipe(
         debounceTime(250),
         map((v) => ({
           search: (v.search ?? '').trim(),
-          status: v.status || undefined // use || to catch null/undefined/empty
+          status: v.status || undefined
         }))
       )
       .subscribe((v) => {

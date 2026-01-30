@@ -1,5 +1,4 @@
 import { createSelector } from '@ngrx/store';
-
 import { selectAllWorkflows } from '../workflows/store/workflows.selectors';
 
 function daysBetween(startIso: string, endIso: string): number {

@@ -8,15 +8,12 @@ import {
   ReactiveFormsModule,
   Validators
 } from '@angular/forms';
-
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
-
 import { debounceTime, first, map, switchMap } from 'rxjs';
-
 import { WorkflowsApi } from '../../services/workflows.api';
 import { Workflow, WorkflowPriority, WorkflowStatus } from '../../../../core/models/workflow.models';
 

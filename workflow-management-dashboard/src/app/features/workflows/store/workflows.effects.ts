@@ -2,7 +2,6 @@ import { Injectable, inject } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import { catchError, map, of, switchMap, withLatestFrom } from 'rxjs';
-
 import { WorkflowsApi } from '../services/workflows.api';
 import { WorkflowsActions } from './workflows.actions';
 import { selectWorkflowsQuery } from './workflows.selectors';
@@ -42,8 +41,6 @@ export class WorkflowsEffects {
           map((created) =>
             WorkflowsActions.createSuccess({ workflow: created })
           ),
-  
-          // ⬇️ reset to page 1 after create
           withLatestFrom(this.store.select(selectWorkflowsQuery)),
           switchMap(([action, query]) =>
             of(
@@ -56,7 +53,7 @@ export class WorkflowsEffects {
               })
             )
           ),
-  
+
           catchError((e) =>
             of(
               WorkflowsActions.createFailure({
@@ -68,7 +65,7 @@ export class WorkflowsEffects {
       )
     )
   );
-  
+
 
   readonly updateOptimistic$ = createEffect(() =>
     this.actions$.pipe(

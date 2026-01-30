@@ -1,9 +1,7 @@
 import { AsyncPipe, DecimalPipe, NgFor, NgIf } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-
 import { MatCardModule } from '@angular/material/card';
 import { BaseChartDirective } from 'ng2-charts';
-
 import { map, shareReplay } from 'rxjs';
 import { DashboardService } from '../../services/dashboard.service';
 

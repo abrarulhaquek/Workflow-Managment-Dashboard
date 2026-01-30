@@ -7,43 +7,141 @@ body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
 
-  .wmd-dark {
+  &.wmd-dark {
     background: #121212;
     color: #e6e6e6;
 
-    .mat-drawer-container {
-      background-color: #121212;
+    .mat-drawer-backdrop.mat-drawer-shown {
+      background-color: rgba(0, 0, 0, 0.6);
+    }
+
+    .mat-sidenav {
+      background-color: #1e1e1e;
       color: #e6e6e6;
+      border-right: 1px solid #333;
 
-      button,
-      input {
+      .mat-list-item {
         color: #e6e6e6;
-      }
 
-      .mat-mdc-card {
-        background: #1e1e1e;
-        color: #e6e6e6;
-      }
-
-      .mat-mdc-table {
-        background: transparent;
-        color: #e6e6e6;
-      }
-
-      .mat-mdc-header-cell {
-        color: #e6e6e6;
-      }
-
-      .mat-mdc-cell {
-        color: #ccc;
+        &:hover {
+          background-color: rgba(255, 255, 255, 0.05);
+        }
       }
     }
 
-  }
+    .mat-toolbar {
+      background-color: #1e1e1e !important;
+      color: #e6e6e6 !important;
+      border-bottom: 1px solid #333;
 
-  .cards {
-    padding: 16px;
-    border-radius: 10px;
-  }
+      button {
+        color: #e6e6e6;
+      }
+    }
 
+    button,
+    input,
+    select,
+    textarea {
+      color: #e6e6e6;
+    }
+
+    .mat-mdc-card {
+      background: #1e1e1e;
+      color: #e6e6e6;
+    }
+
+    .mat-mdc-table {
+      background: transparent;
+      color: #e6e6e6;
+    }
+
+    .mat-mdc-header-cell {
+      color: #e6e6e6;
+    }
+
+    .mat-mdc-cell {
+      color: #ccc;
+    }
+
+    .mat-mdc-paginator {
+      background: transparent;
+      color: #e6e6e6;
+
+      .mat-mdc-paginator-container {
+        color: #e6e6e6;
+      }
+
+      .mat-mdc-paginator-range-label,
+      .mat-mdc-paginator-page-size-label {
+        color: #e6e6e6;
+      }
+
+      .mat-mdc-select-value {
+        color: #e6e6e6;
+      }
+
+      .mat-mdc-select-arrow {
+        color: #e6e6e6;
+      }
+
+      .mat-mdc-icon-button {
+        color: #e6e6e6;
+
+        &:disabled {
+          color: #555;
+        }
+      }
+    }
+
+    .mat-mdc-form-field {
+      .mat-mdc-text-field-wrapper {
+        background-color: #2c2c2c;
+      }
+
+      .mat-mdc-form-field-input-control {
+        color: #e6e6e6;
+      }
+
+      .mat-mdc-floating-label {
+        color: #aaa;
+      }
+
+      .mat-mdc-select-value {
+        color: #e6e6e6;
+      }
+
+      .mat-mdc-select-arrow {
+        color: #e6e6e6;
+      }
+    }
+
+    .mat-mdc-dialog-container {
+      .mat-mdc-dialog-surface {
+        background-color: #1e1e1e;
+        color: #e6e6e6;
+      }
+    }
+
+    .mat-mdc-select-panel {
+      background-color: #2c2c2c;
+
+      .mat-mdc-option {
+        color: #e6e6e6;
+
+        &:hover:not(.mdc-list-item--disabled) {
+          background-color: rgba(255, 255, 255, 0.05);
+        }
+
+        &.mdc-list-item--selected {
+          background-color: rgba(255, 255, 255, 0.1);
+        }
+      }
+    }
+  }
+}
+
+.cards {
+  padding: 16px;
+  border-radius: 10px;
 }

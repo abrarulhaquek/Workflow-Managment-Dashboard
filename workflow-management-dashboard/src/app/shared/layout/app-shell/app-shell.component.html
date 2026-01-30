@@ -8,11 +8,12 @@
   </mat-sidenav>
 
   <mat-sidenav-content>
-    <mat-toolbar color="primary">
-      <span class="spacer"></span>
-      <button mat-button (click)="toggleTheme()">Theme</button>
+    <mat-toolbar color="primary" class="toolbar">
       <span *ngIf="(userLabel$ | async) as label" class="user">{{ label }}</span>
-      <button mat-button (click)="logout()">Logout</button>
+      <div>
+        <button mat-button (click)="toggleTheme()">Theme</button>
+        <button mat-button (click)="logout()">Logout</button>
+      </div>
     </mat-toolbar>
 
     <main class="content">

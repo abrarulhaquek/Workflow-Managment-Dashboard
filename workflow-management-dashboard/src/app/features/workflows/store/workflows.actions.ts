@@ -1,5 +1,4 @@
 import { createActionGroup, emptyProps, props } from '@ngrx/store';
-
 import { PagedResult, Workflow, WorkflowListQuery } from '../../../core/models/workflow.models';
 
 export const WorkflowsActions = createActionGroup({

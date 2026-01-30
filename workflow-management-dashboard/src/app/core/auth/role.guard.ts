@@ -1,8 +1,6 @@
 import { CanMatchFn, Router } from '@angular/router';
 import { inject } from '@angular/core';
-
 import { combineLatest, map } from 'rxjs';
-
 import { Store } from '@ngrx/store';
 import { Role } from '../models/auth.models';
 import { selectAuthRole, selectIsAuthenticated } from '../../features/auth/store/auth.selectors';

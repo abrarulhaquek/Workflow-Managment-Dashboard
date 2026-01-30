@@ -1,8 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { Store } from '@ngrx/store';
-
 import { Observable } from 'rxjs';
-
 import { AuthSession, AuthUser, Role } from '../../core/models/auth.models';
 import {
   selectAuthError,
@@ -25,7 +23,7 @@ export class AuthFacade {
   readonly loading$: Observable<boolean> = this.store.select(selectAuthLoading);
   readonly error$: Observable<string | null> = this.store.select(selectAuthError);
 
-  constructor() {}
+  constructor() { }
 
   initFromStorage(): void {
     this.store.dispatch(AuthActions.initFromStorage());

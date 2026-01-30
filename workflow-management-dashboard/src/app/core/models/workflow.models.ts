@@ -7,9 +7,9 @@ export interface Workflow {
   priority: WorkflowPriority;
   status: WorkflowStatus;
   assignedUserIds: string[];
-  dueDate: string; // ISO date (yyyy-mm-dd)
-  createdAt: string; // ISO datetime
-  completedAt?: string; // ISO datetime
+  dueDate: string;
+  createdAt: string;
+  completedAt?: string;
 }
 
 export interface WorkflowListQuery {
@@ -18,8 +18,8 @@ export interface WorkflowListQuery {
   search?: string;
   status?: WorkflowStatus;
   assignedUserId?: string;
-  fromDate?: string; // ISO date
-  toDate?: string; // ISO date
+  fromDate?: string;
+  toDate?: string;
 }
 
 export interface PagedResult<T> {

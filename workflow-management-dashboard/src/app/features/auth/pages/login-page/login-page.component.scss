@@ -6,7 +6,18 @@
 }
 
 .login-card {
-  width: min(440px, 100%);
+  width: min(400px, 100%);
+  padding: 20px;
+  border-radius: 10px;
+
+  .mat-mdc-card-title {
+    text-align: center;
+  }
+
+  button {
+    width: fit-content;
+    margin: auto;
+  }
 }
 
 .login-form {
@@ -14,4 +25,3 @@
   gap: 12px;
   margin-top: 12px;
 }
-

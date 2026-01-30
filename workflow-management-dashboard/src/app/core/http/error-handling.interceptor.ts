@@ -10,13 +10,11 @@ function toFriendlyMessage(error: unknown): string {
     if (typeof error.message === 'string' && error.message) return error.message;
     return `Request failed (${error.status}).`;
   }
-
   return 'Something went wrong.';
 }
 
 export const errorHandlingInterceptor: HttpInterceptorFn = (req, next) => {
   const snackBar = inject(MatSnackBar);
-
   return next(req).pipe(
     catchError((err) => {
       snackBar.open(toFriendlyMessage(err), 'Dismiss', { duration: 4000 });
