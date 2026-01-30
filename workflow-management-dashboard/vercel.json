@@ -1,14 +1,10 @@
 {
   "buildCommand": "npm run build",
   "outputDirectory": "dist/workflow-management-dashboard/browser",
-  "routes": [
+  "rewrites": [
     {
-      "src": "/(.*)\\.(js|css|png|jpg|jpeg|svg|ico|woff2?)",
-      "dest": "/$1"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/index.html"
+      "source": "/(.*)",
+      "destination": "/index.html"
     }
   ]
 }
