@@ -21,6 +21,15 @@ export interface WorkflowEditorDialogData {
   mode: 'create' | 'edit';
   workflow?: Workflow;
 }
+function dateFormatValidator(control: AbstractControl) {
+  const value = control.value as string | null;
+  if (!value) return null;
+
+  // DD-MM-YYYY format (no alphabets)
+  const dateRegex = /^(0[1-9]|[12][0-9]|3[01])-(0[1-9]|1[0-2])-\d{4}$/;
+
+  return dateRegex.test(value) ? null : { invalidDateFormat: true };
+}
 
 function dueDateNotPast(control: AbstractControl) {
   const v = control.value as string | null;
@@ -91,8 +100,13 @@ export class WorkflowEditorDialogComponent {
       assignedUserIds: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
       dueDate: new FormControl('', {
         nonNullable: true,
-        validators: [Validators.required, dueDateNotPast]
+        validators: [
+          Validators.required,
+          dateFormatValidator,
+          dueDateNotPast
+        ]
       })
+
     });
 
     if (data.workflow) {

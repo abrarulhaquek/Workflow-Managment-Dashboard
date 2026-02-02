@@ -30,7 +30,7 @@ A modern, responsive, and feature-rich **Workflow Management Dashboard** built w
 *   **UI Library**: Angular Material 18
 *   **Styling**: SCSS (with extensive custom theming)
 *   **Reactive Programming**: RxJS (Debouncing, Switching, Combining)
-*   **Charting**: ng2-charts / Chart.js
+*   **Charting**: ng2-charts
 *   **Build**: Angular CLI + Vercel Deployment
 
 ## 📂 Project Architecture
@@ -101,9 +101,6 @@ You can log in with any username, but the **Role** determines your permissions:
 *(Password is not required for the mock login)*
 
 ## 📝 Assignments & Constraints
-*   **No Testing Files**: `*.spec.ts` files have been removed to keep the codebase focused on implementation.
 *   **Performance**: Uses `OnPush` change detection and `trackBy` functions for optimal rendering.
 *   **Clean Code**: AI-generated artifacts have been removed for a human-written feel.
 
----
-*Built for the Advanced Angular Assessment.*

@@ -28,16 +28,22 @@
   </mat-form-field>
 
   <mat-form-field appearance="outline">
-    <mat-label>Assigned users (comma separated ids)</mat-label>
+    <mat-label>Assigned users</mat-label>
     <input matInput formControlName="assignedUserIds" placeholder="u_user,u_manager" />
+    <mat-error *ngIf="form.controls.assignedUserIds.hasError('required')">Assigned users is required</mat-error>
   </mat-form-field>
 
   <mat-form-field appearance="outline">
     <mat-label>Due date</mat-label>
-    <input matInput formControlName="dueDate" placeholder="YYYY-MM-DD" />
+    <input matInput formControlName="dueDate" placeholder="DD-MM-YYYY" />
+    <mat-error *ngIf="form.controls.dueDate.hasError('required')">Due date is required</mat-error>
     <mat-error *ngIf="form.controls.dueDate.hasError('dueDatePast')">
       Due date cannot be in the past
     </mat-error>
+    <mat-error *ngIf="form.controls.dueDate.hasError('invalidDateFormat')">
+      Date must be in DD-MM-YYYY format
+    </mat-error>
+
   </mat-form-field>
 </form>
 
@@ -47,4 +53,3 @@
     Save
   </button>
 </div>
-
