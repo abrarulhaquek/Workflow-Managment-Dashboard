@@ -45,7 +45,6 @@ export class LoginPageComponent {
 
     const { username, role } = this.form.getRawValue();
     this.auth.login(username, role);
-    void this.router.navigateByUrl('/dashboard');
   }
 }
 

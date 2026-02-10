@@ -1,4 +1,5 @@
 import { Injectable, inject } from '@angular/core';
+import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, map, of, switchMap, tap } from 'rxjs';
 import { AuthTokenStorage } from '../../../core/storage/auth-token.storage';
@@ -34,6 +35,7 @@ export class AuthEffects {
   private readonly actions$ = inject(Actions);
   private readonly api = inject(AuthApi);
   private readonly tokenStorage = inject(AuthTokenStorage);
+  private readonly router = inject(Router);
 
   readonly initFromStorage$ = createEffect(() =>
     this.actions$.pipe(
@@ -84,6 +86,15 @@ export class AuthEffects {
       this.actions$.pipe(
         ofType(AuthActions.logout),
         tap(() => this.tokenStorage.clear())
+      ),
+    { dispatch: false }
+  );
+
+  readonly loginSuccess$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(AuthActions.loginSuccess),
+        tap(() => this.router.navigate(['/dashboard']))
       ),
     { dispatch: false }
   );

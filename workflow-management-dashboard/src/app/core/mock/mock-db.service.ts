@@ -131,8 +131,13 @@ export class MockDbService {
       counts[w.status] = (counts[w.status] || 0) + 1;
 
       // Overdue
-      if (w.dueDate < today && w.status !== 'Approved') {
-        overdue++;
+      if (w.status !== 'Approved') {
+        const [d, m, y] = w.dueDate.split('-').map((s) => parseInt(s, 10));
+        const due = new Date(y, m - 1, d).getTime();
+        const now = new Date().setHours(0, 0, 0, 0);
+        if (due < now) {
+          overdue++;
+        }
       }
 
       // Avg Completion
